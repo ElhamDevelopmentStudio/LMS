@@ -1,5 +1,3 @@
-"use client";
-
 import { LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -9,6 +7,7 @@ interface SidebarItemProps {
   label: string;
   href: string;
 }
+
 export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
   const pathName = usePathname();
   const router = useRouter();
@@ -26,7 +25,7 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
     <button
       onClick={onClick}
       className={cn(
-        "flex items-center gap-x-2 text-slate-500 text-small-font[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
+        "flex items-center gap-x-2 text-slate-500 text-sm font-medium pl-6 transition-all hover:text-sky-600 hover:bg-slate-300/20",
         isActive &&
           "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700"
       )}
@@ -36,7 +35,7 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
           size={22}
           className={cn("text-slate-500", isActive && "text-sky-700")}
         />
-        {label}
+        <span className="text-sm font-medium">{label}</span>
       </div>
       <div
         className={cn(
