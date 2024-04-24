@@ -92,7 +92,7 @@ const Create = () => {
               </Link>
               <Button
                 type="submit"
-                variant="outline"
+                variant="default"
                 disabled={!isValid || isSubmitting}
               >
                 Submit
