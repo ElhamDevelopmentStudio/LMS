@@ -17,7 +17,7 @@ generator client {
 model Course {
   id          String  @id @default(uuid())
   userId      String
-  title       String?  @db.Text
+  title       String  @db.Text
   description String? @db.Text
   imageUrl    String? @db.Text
   price       Float?
@@ -26,8 +26,8 @@ model Course {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-  chapters Chapter[]
   attachments Attachment[]
+  chapters    Chapter[]
 
   purchases Purchase[]
 
@@ -58,18 +58,18 @@ model Attachment {
 }
 
 model Chapter {
-  id String @id @default(uuid())
-  title String
+  id          String  @id @default(uuid())
+  title       String
   description String? @db.Text
-  videoUrl String? @db.Text
-  position Int
+  videoUrl    String? @db.Text
+  position    Int
   isPublished Boolean @default(false)
-  isFree Boolean @default(false)
+  isFree      Boolean @default(false)
 
   muxData MuxData?
 
-  courseId String 
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   userProgress UserProgress[]
 
@@ -79,39 +79,37 @@ model Chapter {
   @@index([courseId])
 }
 
-
 model MuxData {
-  id String @id @default(uuid())
-  assetId String
+  id         String  @id @default(uuid())
+  assetId    String
   playbackId String?
 
-  chapterId String @unique
-  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId String  @unique
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
 
-
-model UserProgress{
-  id String @id @default(uuid())
+model UserProgress {
+  id     String @id @default(uuid())
   userId String
 
   chapterId String
-  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   isCompleted Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([chapterId])
   @@unique([userId, chapterId])
+  @@index([chapterId])
 }
 
-model Purchase{
-  id String @id @default(uuid())
+model Purchase {
+  id     String @id @default(uuid())
   userId String
 
   courseId String
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -120,10 +118,10 @@ model Purchase{
 }
 
 model StripeCustomer {
-  id String @id @default(uuid())
-  userId String @unique
+  id               String @id @default(uuid())
+  userId           String @unique
   stripeCustomerId String @unique
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
