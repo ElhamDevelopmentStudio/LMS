@@ -1,11 +1,14 @@
 import { IconBadge } from "@/components/IconBadge";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { ArrowLeft, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { ChapterTitleForm } from "./_components/ChapterTitleForm";
+import { ChapterDescriptionForm } from "./_components/ChapterDescriptionForm";
+import { ChapterAccessForm } from "./_components/ChapterAccessForm";
+import { ChapterVideoForm } from "./_components/ChapterVideoForm";
 
 const ChapterIdPage = async ({
   params,
@@ -48,8 +51,8 @@ const ChapterIdPage = async ({
           </Link>
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col gap-y-2">
-              <h1 className="text-xl font-medium">Chapter Creation</h1>
-              <span className="text-sm text-slate-700">
+              <h1 className="text-2xl font-medium">Chapter Creation</h1>
+              <span className="text-sm text-slate-700 dark:text-slate-300">
                 Complete all fields {completionText}
               </span>
             </div>
@@ -67,6 +70,33 @@ const ChapterIdPage = async ({
               initialData={chapter}
               courseId={params.courseId}
               chapterId={params.chapterId}
+            />
+            <ChapterDescriptionForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Eye} />
+              <h2 className="text-xl">Access Settings</h2>
+            </div>
+            <ChapterAccessForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Video} />
+              <h2 className="text-xl">Add a video</h2>
+            </div>
+            <ChapterVideoForm
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+              initialData={chapter}
             />
           </div>
         </div>
