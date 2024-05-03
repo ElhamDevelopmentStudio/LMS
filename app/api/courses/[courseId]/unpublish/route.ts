@@ -8,26 +8,35 @@ export async function PATCH(
 ) {
   try {
     const { userId } = auth();
-    const { courseId } = params;
-    const values = await req.json();
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const course = await db.course.update({
+    const course = await db.course.findUnique({
       where: {
-        id: courseId,
+        id: params.courseId,
         userId,
-      },
-      data: {
-        ...values,
       },
     });
 
-    return NextResponse.json(course);
+    if (!course) {
+      return new NextResponse("Not found", { status: 404 });
+    }
+
+    const unpublishCourse = await db.course.update({
+      where: {
+        id: params.courseId,
+        userId,
+      },
+      data: {
+        isPublished: false,
+      },
+    });
+
+    return NextResponse.json(unpublishCourse);
   } catch (error) {
-    console.log("[COURSE_ID]: ", error);
+    console.log("[COURSE_ID_UNPUBLISH]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
