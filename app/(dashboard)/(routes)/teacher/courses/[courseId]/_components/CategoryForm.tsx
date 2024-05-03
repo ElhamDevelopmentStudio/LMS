@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { Combobox } from "@/components/ui/commbobox";
+import ComboBox from "@/components/ui/combo-box";
 
 interface CategoryFormProps {
   initialData: Course;
@@ -108,7 +108,7 @@ export const CategoryForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox
+                    <ComboBox
                       options={options}
                       disabled={isSubmitting}
                       {...field}
