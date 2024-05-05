@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
+import { IsTeacher } from "@/lib/teacher";
 
 const { video } = new Mux({
   tokenId: process.env.MUX_TOKEN_ID!,

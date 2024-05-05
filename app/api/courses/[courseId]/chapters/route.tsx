@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { IsTeacher } from "@/lib/teacher";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 

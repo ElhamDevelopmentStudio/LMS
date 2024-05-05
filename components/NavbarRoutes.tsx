@@ -6,9 +6,12 @@ import { Divide, LogOut } from "lucide-react";
 import Link from "next/link";
 import path from "path";
 import { SearchInput } from "./SearchInput";
+import { useAuth } from "@clerk/nextjs";
+import { IsTeacher } from "@/lib/teacher";
 
 export const NavbarRoutes = () => {
   const pathName = usePathname();
+  const { userId } = useAuth();
 
   const isTeacherPage = pathName?.startsWith("/teacher");
   const isCoursePage = pathName?.includes("/courses");
@@ -21,7 +24,8 @@ export const NavbarRoutes = () => {
           <SearchInput />
         </div>
       )}
-      <div className="flex gap-x-2 ml:auto">
+
+      <div className="flex gap-x-2 ml-auto">
         {isTeacherPage || isCoursePage ? (
           <Link href="/">
             <Button size="sm" variant="ghost">
@@ -29,15 +33,16 @@ export const NavbarRoutes = () => {
               Exit
             </Button>
           </Link>
-        ) : (
+        ) : IsTeacher(userId) ? (
           <Link href="/teacher/courses">
             <Button size="sm" variant="ghost">
               Teacher Mode
             </Button>
           </Link>
-        )}
-
-        <UserButton afterSignOutUrl="/" />
+        ) : null}
+        <div className="pr-2">
+          <UserButton afterSignOutUrl="/" />
+        </div>
       </div>
     </>
   );
